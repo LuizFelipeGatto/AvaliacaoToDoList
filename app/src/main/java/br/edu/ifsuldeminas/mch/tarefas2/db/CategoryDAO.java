@@ -74,4 +74,28 @@ public class CategoryDAO extends DAO<Category> {
 
         return categories;
     }
+
+    public Category findById(Integer categoryId) {
+        SQLiteDatabase database = openToRead();
+        Category category = null;
+
+        String sql = " SELECT * FROM categories WHERE id = ?; ";
+
+        String[] params = {categoryId.toString()};
+
+        Cursor cursor = database.rawQuery(sql, params);
+
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String name = cursor.getString(
+                    cursor.getColumnIndexOrThrow("name"));
+
+            category = new Category(id, name);
+        }
+
+        cursor.close();
+        database.close();
+
+        return category;
+    }
 }

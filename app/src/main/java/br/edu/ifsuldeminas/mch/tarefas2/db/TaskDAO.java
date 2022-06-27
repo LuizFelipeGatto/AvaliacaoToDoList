@@ -7,12 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.edu.ifsuldeminas.mch.tarefas2.domain.Category;
 import br.edu.ifsuldeminas.mch.tarefas2.domain.Task;
 
 public class TaskDAO extends DAO<Task> {
 
+    private Context context;
+
     public TaskDAO(Context context){
         super(context);
+        this.context = context;
     }
 
     @Override
@@ -22,6 +27,7 @@ public class TaskDAO extends DAO<Task> {
         ContentValues contentValues = new ContentValues();
         contentValues.put("description", entity.getDescription());
         contentValues.put("active", entity.isActive() ? "1" : "0");
+        contentValues.put("category_id", entity.getCategory().getId());
 
         database.insert("tasks", null, contentValues);
 
@@ -35,6 +41,7 @@ public class TaskDAO extends DAO<Task> {
         ContentValues contentValues = new ContentValues();
         contentValues.put("description", entity.getDescription());
         contentValues.put("active", entity.isActive() ? "1" : "0");
+        contentValues.put("category_id", entity.getCategory().getId());
 
         String[] params = {entity.getId().toString()};
         database.update("tasks", contentValues,
@@ -67,12 +74,17 @@ public class TaskDAO extends DAO<Task> {
             String desc = cursor.getString(
                     cursor.getColumnIndexOrThrow("description"));
 
+            Integer categoryId = cursor.getInt(cursor.getColumnIndexOrThrow("category_id"));
+
             String activeString = cursor.getString(
                     cursor.getColumnIndexOrThrow("active"));
 
             boolean active = activeString.equals("1") ? true : false;
 
-            Task task = new Task(id, desc);
+            CategoryDAO categoryDAO = new CategoryDAO(context);
+            Category category = categoryDAO.findById(categoryId);
+
+            Task task = new Task(id, desc, category);
             task.setActive(active);
 
             tasks.add(task);

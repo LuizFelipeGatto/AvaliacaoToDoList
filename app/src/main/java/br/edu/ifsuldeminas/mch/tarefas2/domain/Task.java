@@ -9,10 +9,11 @@ public class Task implements Serializable {
     private boolean active;
     private Category category;
 
-    public Task(Integer id, String description){
+    public Task(Integer id, String description, Category category){
         this.id = id;
         this.description = description;
         active = true;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -46,6 +47,6 @@ public class Task implements Serializable {
     @Override
     public String toString(){
         return String.format("%s\n%s", description,
-                Boolean.toString(active));
+                category.getName());
     }
 }

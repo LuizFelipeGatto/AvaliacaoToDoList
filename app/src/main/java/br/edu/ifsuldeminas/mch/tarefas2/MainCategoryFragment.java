@@ -37,14 +37,14 @@ public class MainCategoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        registerForContextMenu(binding.todoList);
+        registerForContextMenu(binding.categoryList);
 
-        binding.todoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView,
                                     View view, int position, long l) {
 
-                Category category = (Category) binding.todoList.getItemAtPosition(position);
+                Category category = (Category) binding.categoryList.getItemAtPosition(position);
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("category", (Serializable) category);
@@ -75,7 +75,7 @@ public class MainCategoryFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, categories);
 
-        binding.todoList.setAdapter(adapter);
+        binding.categoryList.setAdapter(adapter);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class MainCategoryFragment extends Fragment {
                 AdapterView.AdapterContextMenuInfo info =
                         (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-                Category categorySelected = (Category) binding.todoList.getItemAtPosition(
+                Category categorySelected = (Category) binding.categoryList.getItemAtPosition(
                         info.position);
 
                 CategoryDAO categoryDAO = new CategoryDAO(getContext());

@@ -83,12 +83,12 @@ public class CategoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Object taskArguments = null;
+        Object categoryArguments = null;
         if(getArguments() != null){
-            taskArguments = getArguments().getSerializable("category");
+            categoryArguments = getArguments().getSerializable("category");
         }
-        if (taskArguments != null) {
-            category = (Category) taskArguments;
+        if (categoryArguments != null) {
+            category = (Category) categoryArguments;
             TextInputEditText categoryDescription = binding.categoryDescription;
             categoryDescription.setText(category.getName());
         }

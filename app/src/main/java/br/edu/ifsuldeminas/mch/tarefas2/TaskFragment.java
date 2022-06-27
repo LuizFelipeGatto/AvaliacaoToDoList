@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,8 +15,12 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.List;
+
 import br.edu.ifsuldeminas.mch.tarefas2.databinding.FragmentTaskBinding;
+import br.edu.ifsuldeminas.mch.tarefas2.db.CategoryDAO;
 import br.edu.ifsuldeminas.mch.tarefas2.db.TaskDAO;
+import br.edu.ifsuldeminas.mch.tarefas2.domain.Category;
 import br.edu.ifsuldeminas.mch.tarefas2.domain.Task;
 
 public class TaskFragment extends Fragment {
@@ -33,10 +39,22 @@ public class TaskFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        CategoryDAO dao = new CategoryDAO(getContext());
+        List<Category> categories = dao.listAll();
+
+        Spinner spinner = getActivity().findViewById(R.id.spinner);
+        ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(getContext(), android.R.layout.simple_spinner_dropdown_item,categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         binding.buttonSaveTaskId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextInputEditText descriptionTIET = binding.taskDescription;
+
+                Category category = (Category) spinner.getSelectedItem();
+
+                System.out.println("##############################################################"+ category.getId());
 
                 String description = descriptionTIET.getText().toString();
                 description = description != null ? description : "";
@@ -46,7 +64,7 @@ public class TaskFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     if(task == null) {
-                        Task task = new Task(0, description);
+                        Task task = new Task(0, description, category);
 
                         TaskDAO dao = new TaskDAO(getContext());
                         dao.save(task);
@@ -55,6 +73,7 @@ public class TaskFragment extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         task.setDescription(description);
+                        task.setCategory(category);
 
                         TaskDAO dao = new TaskDAO(getContext());
                         dao.update(task);
