@@ -85,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            navController.navigate(R.id.action_MainFragment_to_MainCategoryFragment);
+            if (navController.getCurrentDestination().getId() == R.id.MainFragment){
+                navController.navigate(R.id.action_MainFragment_to_MainCategoryFragment);
+            }
             return true;
         }
 

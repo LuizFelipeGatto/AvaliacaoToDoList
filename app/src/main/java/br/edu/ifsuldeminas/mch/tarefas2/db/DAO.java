@@ -15,7 +15,9 @@ abstract class DAO<T> {
     }
 
     SQLiteDatabase openToWrite(){
-        return dbHandler.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHandler.getWritableDatabase();
+        sqLiteDatabase.setForeignKeyConstraintsEnabled(true);
+        return sqLiteDatabase;
     }
 
     SQLiteDatabase openToRead(){

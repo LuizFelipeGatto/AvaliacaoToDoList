@@ -29,9 +29,6 @@
         <action
             android:id="@+id/action_TaskFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
-        <action
-            android:id="@+id/action_TaskFragment_to_MainCategoryFragment"
-            app:destination="@id/MainCategoryFragment" />
     </fragment>
 
     <fragment

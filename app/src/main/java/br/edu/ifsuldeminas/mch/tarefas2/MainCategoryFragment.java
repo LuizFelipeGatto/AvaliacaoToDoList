@@ -1,5 +1,6 @@
 package br.edu.ifsuldeminas.mch.tarefas2;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import java.io.Serializable;
 import java.util.List;
 
 import br.edu.ifsuldeminas.mch.tarefas2.databinding.FragmentMainCategoryBinding;
@@ -47,7 +47,7 @@ public class MainCategoryFragment extends Fragment {
                 Category category = (Category) binding.categoryList.getItemAtPosition(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("category", (Serializable) category);
+                bundle.putSerializable("category", category);
 
                 NavController navController = Navigation.findNavController(
                         getActivity(), R.id.nav_host_fragment_content_main);
@@ -81,7 +81,7 @@ public class MainCategoryFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-        MenuItem item = menu.add(R.string.delete_task);
+        MenuItem item = menu.add(R.string.delete_category);
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -92,12 +92,15 @@ public class MainCategoryFragment extends Fragment {
                         info.position);
 
                 CategoryDAO categoryDAO = new CategoryDAO(getContext());
-                categoryDAO.delete(categorySelected);
-
-                Toast.makeText(getContext(), R.string.category_saved,
-                        Toast.LENGTH_SHORT).show();
-
-                updateCategorys();
+                try {
+                    categoryDAO.delete(categorySelected);
+                    Toast.makeText(getContext(), R.string.category_deleted,
+                            Toast.LENGTH_SHORT).show();
+                    updateCategorys();
+                }catch (SQLiteConstraintException sqLiteConstraintException){
+                    Toast.makeText(getContext(), R.string.error_exclusao,
+                            Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });

@@ -13,10 +13,12 @@
     <string name="task_done">Tarefa concluída</string>
     <string name="task_updated">Tarefa atualizada</string>
     <string name="delete_task">Concluir Tafera</string>
+    <string name="delete_category">Excluir categoria</string>
     <string name="category_description">Descrição da categoria</string>
     <string name="category_saved">Categoria Salva</string>
     <string name="category_deleted">Categoria apagada</string>
     <string name="category_fragment_title">Cadastrar categoria</string>
     <string name="category_description_empty">Descrição da categoria não pode ser vazia</string>
     <string name="category_main_fragment_title">Listagem de categorias</string>
+    <string name="error_exclusao">Esta categoria não pode ser excluída, pois está vinculada a uma tarefa!</string>
 </resources>
