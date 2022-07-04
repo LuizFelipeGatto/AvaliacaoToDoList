@@ -1,26 +1,22 @@
 package br.edu.ifsuldeminas.mch.tarefas2;
 
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import br.edu.ifsuldeminas.mch.tarefas2.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import br.edu.ifsuldeminas.mch.tarefas2.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
